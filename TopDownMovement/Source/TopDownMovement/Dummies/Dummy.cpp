@@ -6,6 +6,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "GameFramework/FloatingPawnMovement.h"
+#include "Net/UnrealNetwork.h"
 
 
 // Sets default values
@@ -30,6 +31,11 @@ ADummy::ADummy()
 
 	Tags.Empty();
 	Tags.Add("Dummy");
+
+	TeamID = 0;
+
+	SetReplicates(true);
+	SetReplicateMovement(true);
 }
 
 // Called when the game starts or when spawned
@@ -59,3 +65,9 @@ void ADummy::MoveTo(FVector Location)
 	UAIBlueprintHelperLibrary::SimpleMoveToLocation(c, Location);
 }
 
+void ADummy::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(ADummy, TeamID);
+}

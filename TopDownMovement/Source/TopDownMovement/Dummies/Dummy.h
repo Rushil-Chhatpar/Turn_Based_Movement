@@ -24,6 +24,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
 		class UFloatingPawnMovement* PawnMovement;
 
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadOnly, Category = "Team")
+		int TeamID;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
