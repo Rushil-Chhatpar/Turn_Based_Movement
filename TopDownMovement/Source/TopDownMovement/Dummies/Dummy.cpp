@@ -56,10 +56,21 @@ void ADummy::Tick(float DeltaTime)
 void ADummy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
+	
 }
 
 void ADummy::MoveTo(FVector Location)
+{
+	AController* c = GetController();
+	UAIBlueprintHelperLibrary::SimpleMoveToLocation(c, Location);
+
+	ENetRole role = GetLocalRole();
+	
+	if (role <= ROLE_Authority)
+		Server_MoveTo(Location);
+}
+
+void ADummy::Server_MoveTo_Implementation(FVector Location)
 {
 	AController* c = GetController();
 	UAIBlueprintHelperLibrary::SimpleMoveToLocation(c, Location);
@@ -70,4 +81,9 @@ void ADummy::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimePr
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(ADummy, TeamID);
+	DOREPLIFETIME(ADummy, StaticMesh);
+	DOREPLIFETIME(ADummy, BoxCollider);
+	DOREPLIFETIME(ADummy, PawnMovement);
+
+
 }

@@ -20,5 +20,4 @@ class TOPDOWNMOVEMENT_API ATopDownGameMode : public AGameModeBase
 
 	//virtual void BeginPlay() override;
 
-
 };

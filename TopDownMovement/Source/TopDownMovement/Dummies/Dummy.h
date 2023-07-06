@@ -15,13 +15,13 @@ public:
 	// Sets default values for this pawn's properties
 	ADummy();
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "Mesh")
 		class UStaticMeshComponent* StaticMesh;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Box Collider")
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "Box Collider")
 		class UBoxComponent* BoxCollider;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "Movement")
 		class UFloatingPawnMovement* PawnMovement;
 
 	UPROPERTY(Replicated, EditAnywhere, BlueprintReadOnly, Category = "Team")
@@ -39,5 +39,8 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void MoveTo(FVector Location);
+
+	UFUNCTION(Server, Reliable)
+		void Server_MoveTo(FVector Location);
 
 };
