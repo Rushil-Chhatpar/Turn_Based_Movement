@@ -3,21 +3,31 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/GameModeBase.h"
+#include "GameFramework/GameMode.h"
 #include "TopDownGameMode.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class TOPDOWNMOVEMENT_API ATopDownGameMode : public AGameModeBase
+class TOPDOWNMOVEMENT_API ATopDownGameMode : public AGameMode
 {
 	GENERATED_BODY()
 
-	//virtual void PostLogin(APlayerController* NewPlayer) override;
 
-	//virtual void Logout(AController* Exiting) override;
+public:
 
-	//virtual void BeginPlay() override;
+	virtual void PostLogin(APlayerController* NewPlayer) override;
+	
+	virtual void Logout(AController* Exiting) override;
 
+
+	void SpawnPlayer(APlayerController* PlayerController);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Pawn")
+		TSubclassOf<class ATopDownCharacter> CharacterClass;
+
+protected:
+
+	TArray<class ATopDownPlayerController*> PlayerControllers;
 };

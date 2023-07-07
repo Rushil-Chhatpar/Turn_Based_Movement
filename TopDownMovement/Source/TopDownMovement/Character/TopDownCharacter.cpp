@@ -38,13 +38,13 @@ void ATopDownCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if(ATopDownPlayerController* TDController = Cast<ATopDownPlayerController>(GetController()))
-	{
-	    if(UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(TDController->GetLocalPlayer()))
-	    {
-			Subsystem->AddMappingContext(MappingContext, 0);
-	    }
-	}
+	//if(ATopDownPlayerController* TDController = Cast<ATopDownPlayerController>(GetController()))
+	//{
+	//    if(UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(TDController->GetLocalPlayer()))
+	//    {
+	//		Subsystem->AddMappingContext(MappingContext, 0);
+	//    }
+	//}
 
 }
 
@@ -84,14 +84,14 @@ void ATopDownCharacter::Tick(float DeltaTime)
 }
 
 // Called to bind functionality to input
-void ATopDownCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-	UEnhancedInputComponent* EnhancedInput = CastChecked<UEnhancedInputComponent>(PlayerInputComponent);
-	if(EnhancedInput!=nullptr)
-	{
-		EnhancedInput->BindAction(LeftClickAction, ETriggerEvent::Completed, this, &ATopDownCharacter::LeftClick);
-	}
-}
+//void ATopDownCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+//{
+//	Super::SetupPlayerInputComponent(PlayerInputComponent);
+//
+//	UEnhancedInputComponent* EnhancedInput = CastChecked<UEnhancedInputComponent>(PlayerInputComponent);
+//	if(EnhancedInput!=nullptr)
+//	{
+//		EnhancedInput->BindAction(LeftClickAction, ETriggerEvent::Completed, this, &ATopDownCharacter::LeftClick);
+//	}
+//}
 
