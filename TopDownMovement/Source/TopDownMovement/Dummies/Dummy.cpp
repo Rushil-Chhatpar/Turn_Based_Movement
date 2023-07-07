@@ -61,17 +61,18 @@ void ADummy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void ADummy::MoveTo(FVector Location)
 {
-	AController* c = GetController();
-	UAIBlueprintHelperLibrary::SimpleMoveToLocation(c, Location);
+	//AController* c = GetController();
+	//UAIBlueprintHelperLibrary::SimpleMoveToLocation(c, Location);
 
-	ENetRole role = GetLocalRole();
-	
-	if (role <= ROLE_Authority)
+	//ENetRole role = GetLocalRole();
+	//
+	//if (role <= ROLE_Authority)
 		Server_MoveTo(Location);
 }
 
 void ADummy::Server_MoveTo_Implementation(FVector Location)
 {
+	ENetRole role = GetLocalRole();
 	AController* c = GetController();
 	UAIBlueprintHelperLibrary::SimpleMoveToLocation(c, Location);
 }

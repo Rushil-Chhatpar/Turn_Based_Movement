@@ -31,6 +31,8 @@ ATopDownCharacter::ATopDownCharacter()
 
 	GetCapsuleComponent()->SetEnableGravity(false);
 
+	SetReplicates(true);
+	SetReplicateMovement(true);
 }
 
 // Called when the game starts or when spawned
@@ -70,9 +72,9 @@ void ATopDownCharacter::LeftClick(const FInputActionValue& Value)
 	{
 		CurrentSelection->MoveTo(Hit.Location);
 		CurrentSelection = nullptr;
+		//Server_MoveDummyTo(Hit.Location);
 	}
 	
-
 }
 
 
@@ -81,6 +83,12 @@ void ATopDownCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void ATopDownCharacter::Server_MoveDummyTo_Implementation(FVector Location)
+{
+	CurrentSelection->MoveTo(Location);
+	CurrentSelection = nullptr;
 }
 
 // Called to bind functionality to input
