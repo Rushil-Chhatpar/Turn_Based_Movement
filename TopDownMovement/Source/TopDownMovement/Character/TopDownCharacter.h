@@ -25,8 +25,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Input")
 		class UInputMappingContext* MappingContext;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
-		class UInputAction* LeftClickAction;
+
 
 protected:
 	// Called when the game starts or when spawned
@@ -35,8 +34,10 @@ protected:
 public:
 	void LeftClick(const FInputActionValue& Value);
 
+	void RightClick(const FInputActionValue& Value);
+
 	UPROPERTY(VisibleAnywhere)
-		class ADummy* CurrentSelection;
+		class ADummyMk3* CurrentSelection;
 
 public:	
 	// Called every frame
@@ -45,7 +46,17 @@ public:
 	UFUNCTION(Server, Reliable)
 		void Server_MoveDummyTo(FVector Location);
 
+	UPROPERTY(EditAnywhere, Category = "Dummy Class")
+		TSubclassOf<class ADummyMk3> DummyClass;
+
+	UFUNCTION(Server, Reliable)
+		void Server_SpawnDummies();
 	// Called to bind functionality to input
 	//virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+
+	UFUNCTION(Server, Reliable)
+		void Server_SpawnDummy(FVector Location);
+
+	class ADummyMk3* TempDummy = nullptr;
 };

@@ -38,6 +38,12 @@ void ATopDownPlayerController::LeftClick(const FInputActionValue& Value)
     PCharacter->LeftClick(Value);
 }
 
+void ATopDownPlayerController::RightClick(const FInputActionValue& Value)
+{
+    ATopDownCharacter* PCharacter = Cast<ATopDownCharacter>(this->GetPawn());
+    PCharacter->RightClick(Value);
+}
+
 void ATopDownPlayerController::SetupInputComponent()
 {
     Super::SetupInputComponent();
@@ -46,6 +52,8 @@ void ATopDownPlayerController::SetupInputComponent()
     if (EnhancedInput != nullptr)
     {
         EnhancedInput->BindAction(LeftClickAction, ETriggerEvent::Completed, this, &ATopDownPlayerController::LeftClick);
+
+        EnhancedInput->BindAction(RightClickAction, ETriggerEvent::Completed, this, &ATopDownPlayerController::RightClick);
     }
 }
 

@@ -5,22 +5,22 @@
 #include "TopDownMovement/PlayerController/TopDownPlayerController.h"
 #include "GameFramework/PlayerStart.h"
 #include "TopDownMovement/Character/TopDownCharacter.h"
-#include "TopDownMovement/Dummies/Dummy.h"
+#include "TopDownMovement/Dummies/DummyMk3.h"
 #include "Kismet/GameplayStatics.h"
 #include "TopDownMovement/DummySpawnLocation.h"
 
 void ATopDownGameMode::BeginPlay()
 {
     Super::BeginPlay();
-    TArray<AActor*> Locations;
-    FActorSpawnParameters SpawnParameters;
-    SpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-    UGameplayStatics::GetAllActorsOfClass(GetWorld(), ADummySpawnLocation::StaticClass(), Locations);
-    for (int i = 0; i < Locations.Num(); i++)
-    {
-        GetWorld()->SpawnActor<ADummy>(DummyClass, Locations[i]->GetActorLocation(), Locations[i]->GetActorRotation(), SpawnParameters);
-    }
-    //Server_SpawnDummies();
+    //TArray<AActor*> Locations;
+    //FActorSpawnParameters SpawnParameters;
+    //SpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+    //UGameplayStatics::GetAllActorsOfClass(GetWorld(), ADummySpawnLocation::StaticClass(), Locations);
+    //for (int i = 0; i < Locations.Num(); i++)
+    //{
+    //    GetWorld()->SpawnActor<ADummy>(DummyClass, Locations[i]->GetActorLocation(), Locations[i]->GetActorRotation(), SpawnParameters);
+    //}
+    Server_SpawnDummies();
 }
 
 void ATopDownGameMode::PostLogin(APlayerController* NewPlayer)
@@ -78,7 +78,7 @@ void ATopDownGameMode::Server_SpawnDummies_Implementation()
     UGameplayStatics::GetAllActorsOfClass(GetWorld(), ADummySpawnLocation::StaticClass(), Locations);
     for (int i = 0; i < Locations.Num(); i++)
     {
-        GetWorld()->SpawnActor<ADummy>(DummyClass, Locations[i]->GetActorLocation(), Locations[i]->GetActorRotation(), SpawnParameters);
+        GetWorld()->SpawnActor<ADummyMk3>(DummyClass, Locations[i]->GetActorLocation(), Locations[i]->GetActorRotation(), SpawnParameters);
     }
 }
 

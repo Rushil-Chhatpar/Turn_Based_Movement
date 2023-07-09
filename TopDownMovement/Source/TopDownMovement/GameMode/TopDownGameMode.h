@@ -29,7 +29,7 @@ public:
 		TSubclassOf<class ATopDownCharacter> CharacterClass;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Dummy")
-		TSubclassOf<class ADummy> DummyClass;
+		TSubclassOf<class ADummyMk3> DummyClass;
 
 	UFUNCTION(Server, Reliable)
 		void Server_SpawnDummies();

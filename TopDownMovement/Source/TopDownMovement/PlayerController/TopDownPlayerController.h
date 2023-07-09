@@ -21,6 +21,8 @@ class TOPDOWNMOVEMENT_API ATopDownPlayerController : public APlayerController
 
 	void LeftClick(const FInputActionValue& Value);
 
+	void RightClick(const FInputActionValue& Value);
+
 public:
     virtual void SetupInputComponent() override;
 
@@ -29,6 +31,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
 		class UInputAction* LeftClickAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
+		class UInputAction* RightClickAction;
 
 	UFUNCTION(Server, Reliable)
 		void Server_SpawnPlayer();
