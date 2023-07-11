@@ -36,7 +36,7 @@ public:
 
 	void RightClick(const FInputActionValue& Value);
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(Replicated, VisibleAnywhere)
 		class ADummyMk3* CurrentSelection;
 
 public:	
@@ -44,7 +44,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION(Server, Reliable)
-		void Server_MoveDummyTo(FVector Location);
+		void Server_MoveDummyTo(FVector Location, class ADummyMk3* dummy);
 
 	UPROPERTY(EditAnywhere, Category = "Dummy Class")
 		TSubclassOf<class ADummyMk3> DummyClass;

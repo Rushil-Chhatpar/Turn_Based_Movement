@@ -18,6 +18,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Static Mesh")
 		class UStaticMeshComponent* StaticMesh;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Text")
+		class UTextRenderComponent* TextRender;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

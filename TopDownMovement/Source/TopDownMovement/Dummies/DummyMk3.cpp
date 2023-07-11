@@ -4,6 +4,7 @@
 #include "TopDownMovement/Dummies/DummyMk3.h"
 #include "Net/UnrealNetwork.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
+#include "Components/TextRenderComponent.h"
 
 // Sets default values
 ADummyMk3::ADummyMk3()
@@ -14,6 +15,9 @@ ADummyMk3::ADummyMk3()
 	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>("Static Mesh");
 	StaticMesh->SetCollisionProfileName("NoCollision");
 	StaticMesh->SetupAttachment(RootComponent);
+
+	TextRender = CreateDefaultSubobject<UTextRenderComponent>("Text");
+	TextRender->SetupAttachment(RootComponent);
 
 	this->Tags.Empty();
 	this->Tags.Add("DummyMk3");
@@ -36,18 +40,20 @@ void ADummyMk3::Tick(float DeltaTime)
 
 	AActor* test = Owner;
 	ENetRole role = GetLocalRole();
-	int bp = 0;
+    int bp = 0;
+
+
 }
 
 void ADummyMk3::MoveDummy(FVector Location)
 {
-	FVector loc = GetActorLocation();
-	loc.Z += 50.0f;
-	SetActorLocation(loc);
-	Server_MoveDummy(Location);
+	//FVector loc = GetActorLocation();
+	//loc.Z += 50.0f;
+	//SetActorLocation(loc);
+	//Server_MoveDummy(Location);
 	ENetRole role = GetLocalRole();
 	int bp = 0;
-	//UAIBlueprintHelperLibrary::SimpleMoveToLocation(GetController(), Location);
+	UAIBlueprintHelperLibrary::SimpleMoveToLocation(GetController(), Location);
 }
 
 void ADummyMk3::SetAutoRole()

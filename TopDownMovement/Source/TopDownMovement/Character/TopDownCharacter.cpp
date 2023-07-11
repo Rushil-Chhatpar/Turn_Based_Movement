@@ -14,6 +14,7 @@
 #include "TopDownMovement/Dummies/DummyMk3.h"
 #include "Kismet/GameplayStatics.h"
 #include "TopDownMovement/DummySpawnLocation.h"
+#include "Net/UnrealNetwork.h"
 
 
 // Sets default values
@@ -83,10 +84,10 @@ void ATopDownCharacter::LeftClick(const FInputActionValue& Value)
 	{
 		if (GetLocalRole() >= ROLE_AutonomousProxy)
 		{
-			CurrentSelection->MoveDummy(Hit.Location);
-			CurrentSelection = nullptr;
+			//CurrentSelection->MoveDummy(Hit.Location);
+			//CurrentSelection = nullptr;
+			Server_MoveDummyTo(Hit.Location, CurrentSelection);
 		}
-		//Server_MoveDummyTo(Hit.Location);
 	}
 	
 }
@@ -145,10 +146,14 @@ void ATopDownCharacter::Server_SpawnDummies_Implementation()
 	}
 }
 
-void ATopDownCharacter::Server_MoveDummyTo_Implementation(FVector Location)
+void ATopDownCharacter::Server_MoveDummyTo_Implementation(FVector Location, class ADummyMk3* dummy)
 {
-	//CurrentSelection->Server_MoveTo(Location);
-	//CurrentSelection = nullptr;
+	if(dummy !=nullptr)
+	{
+		dummy->MoveDummy(Location);
+		dummy = nullptr;
+	    
+	}
 }
 
 // Called to bind functionality to input
@@ -163,3 +168,8 @@ void ATopDownCharacter::Server_MoveDummyTo_Implementation(FVector Location)
 //	}
 //}
 
+void ATopDownCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+	DOREPLIFETIME(ATopDownCharacter, CurrentSelection);
+}
