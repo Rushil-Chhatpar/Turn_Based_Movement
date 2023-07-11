@@ -49,10 +49,6 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Dummy Class")
 		TSubclassOf<class ADummyMk3> DummyClass;
 
-	UFUNCTION(Server, Reliable)
-		void Server_SpawnDummies();
-	// Called to bind functionality to input
-	//virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 
 	UFUNCTION(Server, Reliable)

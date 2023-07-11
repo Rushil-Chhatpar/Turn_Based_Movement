@@ -45,15 +45,7 @@ void ATopDownCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//if(ATopDownPlayerController* TDController = Cast<ATopDownPlayerController>(GetController()))
-	//{
-	//    if(UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(TDController->GetLocalPlayer()))
-	//    {
-	//		Subsystem->AddMappingContext(MappingContext, 0);
-	//    }
-	//}
-	//if (GetLocalRole() == ROLE_Authority)
-	//	Server_SpawnDummies();
+
 
 }
 
@@ -85,8 +77,8 @@ void ATopDownCharacter::LeftClick(const FInputActionValue& Value)
 		if (GetLocalRole() >= ROLE_AutonomousProxy)
 		{
 			//CurrentSelection->MoveDummy(Hit.Location);
-			//CurrentSelection = nullptr;
 			Server_MoveDummyTo(Hit.Location, CurrentSelection);
+			CurrentSelection = nullptr;
 		}
 	}
 	
@@ -133,18 +125,7 @@ void ATopDownCharacter::Server_SpawnDummy_Implementation(FVector Location)
 	//	dummy->SetAutoRole();
 }
 
-void ATopDownCharacter::Server_SpawnDummies_Implementation()
-{
-	TArray<AActor*> Locations;
-	FActorSpawnParameters SpawnParameters;
-	SpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ADummySpawnLocation::StaticClass(), Locations);
-	for (int i = 0; i < Locations.Num(); i++)
-	{
-		ADummyMk3* dummy = GetWorld()->SpawnActor<ADummyMk3>(DummyClass, Locations[i]->GetActorLocation(), Locations[i]->GetActorRotation(), SpawnParameters);
-		dummy->Owner = this;
-	}
-}
+
 
 void ATopDownCharacter::Server_MoveDummyTo_Implementation(FVector Location, class ADummyMk3* dummy)
 {
@@ -156,17 +137,7 @@ void ATopDownCharacter::Server_MoveDummyTo_Implementation(FVector Location, clas
 	}
 }
 
-// Called to bind functionality to input
-//void ATopDownCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-//{
-//	Super::SetupPlayerInputComponent(PlayerInputComponent);
-//
-//	UEnhancedInputComponent* EnhancedInput = CastChecked<UEnhancedInputComponent>(PlayerInputComponent);
-//	if(EnhancedInput!=nullptr)
-//	{
-//		EnhancedInput->BindAction(LeftClickAction, ETriggerEvent::Completed, this, &ATopDownCharacter::LeftClick);
-//	}
-//}
+
 
 void ATopDownCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {

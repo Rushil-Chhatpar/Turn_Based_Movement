@@ -47,12 +47,6 @@ void ADummyMk3::Tick(float DeltaTime)
 
 void ADummyMk3::MoveDummy(FVector Location)
 {
-	//FVector loc = GetActorLocation();
-	//loc.Z += 50.0f;
-	//SetActorLocation(loc);
-	//Server_MoveDummy(Location);
-	ENetRole role = GetLocalRole();
-	int bp = 0;
 	UAIBlueprintHelperLibrary::SimpleMoveToLocation(GetController(), Location);
 }
 
