@@ -36,5 +36,6 @@ public:
 
 protected:
 	int index = 0;
+	int teamIndexCount = 0;
 	TArray<class ATopDownPlayerController*> PlayerControllers;
 };

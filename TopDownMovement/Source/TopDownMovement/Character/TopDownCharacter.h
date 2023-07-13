@@ -25,7 +25,8 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Input")
 		class UInputMappingContext* MappingContext;
 
-
+	UPROPERTY(VisibleAnywhere, Replicated)
+		int TeamID;
 
 protected:
 	// Called when the game starts or when spawned

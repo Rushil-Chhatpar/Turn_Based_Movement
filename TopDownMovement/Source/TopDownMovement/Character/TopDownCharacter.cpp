@@ -14,6 +14,7 @@
 #include "TopDownMovement/Dummies/DummyMk3.h"
 #include "Kismet/GameplayStatics.h"
 #include "TopDownMovement/DummySpawnLocation.h"
+#include "TopDownMovement/PlayerState/TopDownPlayerState.h"
 #include "Net/UnrealNetwork.h"
 
 
@@ -66,11 +67,9 @@ void ATopDownCharacter::LeftClick(const FInputActionValue& Value)
 	FVector loc = Hit.Location;
 	if(hitActor!= nullptr && hitActor->ActorHasTag("DummyMk3"))
 	{
-		AActor* test = Owner;
-		ENetRole role = GetLocalRole();
-		int bp = 0;
 		ADummyMk3* Dummy = Cast<ADummyMk3>(hitActor);
-		CurrentSelection = Dummy;
+		if (Dummy->TeamID == this->TeamID)
+			CurrentSelection = Dummy;
 	}
 	else if(CurrentSelection!=nullptr)
 	{
@@ -98,8 +97,7 @@ void ATopDownCharacter::RightClick(const FInputActionValue& Value)
 	PController->GetHitResultUnderCursorByChannel(TraceTypeQuery1, false, Hit);
 
 	Server_SpawnDummy(Hit.Location);
-	if (TempDummy != nullptr)
-		TempDummy->SetAutoRole();
+
 	
 }
 
@@ -120,9 +118,8 @@ void ATopDownCharacter::Server_SpawnDummy_Implementation(FVector Location)
 	SpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 	ADummyMk3* dummy = GetWorld()->SpawnActor<ADummyMk3>(DummyClass, SpawnLocation, FRotator(0,0,0), SpawnParameters);
 	dummy->Owner = this;
-	TempDummy = dummy;
-	//if (GetLocalRole() == ROLE_AutonomousProxy)
-	//	dummy->SetAutoRole();
+	ATopDownPlayerState* PS = Cast<ATopDownPlayerState>(GetPlayerState());
+	dummy->SetTeamID(PS->PlayerTeamID);
 }
 
 
@@ -143,4 +140,5 @@ void ATopDownCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Ou
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 	DOREPLIFETIME(ATopDownCharacter, CurrentSelection);
+	DOREPLIFETIME(ATopDownCharacter, TeamID);
 }

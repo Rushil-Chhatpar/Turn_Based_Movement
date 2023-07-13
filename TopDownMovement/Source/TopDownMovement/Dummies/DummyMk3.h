@@ -36,5 +36,9 @@ public:
 
 	void SetAutoRole();
 
+	UPROPERTY(VisibleAnywhere, Replicated)
+		int TeamID;
+
+	void SetTeamID(int teamID);
 	
 };

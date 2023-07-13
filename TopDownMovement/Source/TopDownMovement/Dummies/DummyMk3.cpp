@@ -55,6 +55,11 @@ void ADummyMk3::SetAutoRole()
 	SetAutonomousProxy(true);
 }
 
+void ADummyMk3::SetTeamID(int teamID)
+{
+	TeamID = teamID;
+}
+
 void ADummyMk3::Server_MoveDummy_Implementation(FVector Location)
 {
 	FVector loc = GetActorLocation();
@@ -63,3 +68,9 @@ void ADummyMk3::Server_MoveDummy_Implementation(FVector Location)
 }
 
 
+void ADummyMk3::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(ADummyMk3, TeamID);
+}

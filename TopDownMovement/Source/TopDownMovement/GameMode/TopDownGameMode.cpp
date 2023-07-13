@@ -8,6 +8,7 @@
 #include "TopDownMovement/Dummies/DummyMk3.h"
 #include "Kismet/GameplayStatics.h"
 #include "TopDownMovement/DummySpawnLocation.h"
+#include "TopDownMovement/PlayerState/TopDownPlayerState.h"
 
 void ATopDownGameMode::BeginPlay()
 {
@@ -30,7 +31,15 @@ void ATopDownGameMode::PostLogin(APlayerController* NewPlayer)
     ATopDownPlayerController* PC = Cast<ATopDownPlayerController>(NewPlayer);
 
     if (PC != nullptr)
+    {
         PlayerControllers.Add(PC);
+        ATopDownPlayerState* PS = Cast<ATopDownPlayerState>(PC->GetPlayerState<ATopDownPlayerState>());
+        if(PS!=nullptr)
+        {
+            PS->PlayerTeamID = teamIndexCount;
+            teamIndexCount++;
+        }
+    }
 }
 
 void ATopDownGameMode::Logout(AController* Exiting)
@@ -38,7 +47,7 @@ void ATopDownGameMode::Logout(AController* Exiting)
     Super::Logout(Exiting);
 
     ATopDownPlayerController* PC = Cast<ATopDownPlayerController>(Exiting);
-
+    
     if (PC != nullptr)
         PlayerControllers.Remove(PC);
 
@@ -66,6 +75,9 @@ void ATopDownGameMode::SpawnPlayer(APlayerController* PlayerController)
     //ATopDownCharacter* Character = GetWorld()->SpawnActor(CharacterClass, PlayerStarts[rand]->GetActorLocation(), PlayerStarts[rand]->GetActorRotation(), SpawnParameters);
     ATopDownCharacter* Character = GetWorld()->SpawnActor<ATopDownCharacter>(CharacterClass, PlayerStarts[index]->GetActorLocation(), PlayerStarts[index]->GetActorRotation(), SpawnParameters);
     index++;
+
+    ATopDownPlayerController* PC = Cast<ATopDownPlayerController>(PlayerController);
+    Character->TeamID = PC->GetPlayerState<ATopDownPlayerState>()->PlayerTeamID;
 
     PlayerController->Possess(Character);
 }
