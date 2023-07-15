@@ -24,6 +24,8 @@ protected:
 	virtual void Init() override;
 	
 	virtual void OnCreateSessionComplete(FName SessionName, bool bWasSuccessful);
+	virtual void OnFindSessionComplete(bool bWasSuccessful);
+	virtual void OnJoinSessionComplete(FName SessionName, EOnJoinSessionCompleteResult::Type Result);
 
 	UFUNCTION(BlueprintCallable)
 		void CreateServer();
@@ -33,4 +35,6 @@ protected:
 
 protected:
 	IOnlineSessionPtr SessionInterface;
+
+	TSharedPtr<FOnlineSessionSearch> SessionSearch;
 };
