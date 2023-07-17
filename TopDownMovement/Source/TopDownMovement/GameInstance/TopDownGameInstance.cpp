@@ -79,6 +79,8 @@ void UTopDownGameInstance::CreateServer()
     SessionSettings.bShouldAdvertise = true;
     SessionSettings.bUsesPresence = true;
     SessionSettings.NumPublicConnections = 4;
+    SessionSettings.bUseLobbiesIfAvailable = true;
+    
 
 
     SessionInterface->CreateSession(0, FName("My Session"), SessionSettings);
