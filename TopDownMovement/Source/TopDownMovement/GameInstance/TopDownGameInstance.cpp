@@ -9,7 +9,7 @@
 
 UTopDownGameInstance::UTopDownGameInstance()
 {
-
+    MySessionName = FName("My Session");
 }
 
 void UTopDownGameInstance::Init()
@@ -42,13 +42,17 @@ void UTopDownGameInstance::OnCreateSessionComplete(FName SessionName, bool bWasS
 
 void UTopDownGameInstance::OnFindSessionComplete(bool bWasSuccessful)
 {
+    SearchingForServer.Broadcast(false);
     UE_LOG(LogTemp, Warning, TEXT("Find Success: %d"), bWasSuccessful);
     if(bWasSuccessful)
     {
+        int32 ArrayIndex = -1;
+
         TArray<FOnlineSessionSearchResult> SearchResults = SessionSearch->SearchResults;
 
         for(FOnlineSessionSearchResult Result : SearchResults)
         {
+            ++ArrayIndex;
             if(!Result.IsValid())
                 continue;
 
@@ -62,7 +66,8 @@ void UTopDownGameInstance::OnFindSessionComplete(bool bWasSuccessful)
             Info.ServerName = ServerName;
             Info.MaxPlayers = Result.Session.SessionSettings.NumPublicConnections;
             Info.CurrentPlayers = Info.MaxPlayers - Result.Session.NumOpenPublicConnections;
-
+            Info.SetPlayerCount();
+            Info.ServerArrayIndex = ArrayIndex;
             ServerListDelegate.Broadcast(Info);
             
         }
@@ -105,10 +110,10 @@ void UTopDownGameInstance::CreateServer(FString ServerName, FString HostName)
     SessionSettings.Set(FName("SERVER_HOSTNAME_KEY"), HostName, EOnlineDataAdvertisementType::ViaOnlineServiceAndPing);
 
 
-    SessionInterface->CreateSession(0, FName("My Session"), SessionSettings);
+    SessionInterface->CreateSession(0, MySessionName, SessionSettings);
 }
 
-void UTopDownGameInstance::JoinServer()
+void UTopDownGameInstance::FindServer()
 {
     SessionSearch = MakeShareable(new FOnlineSessionSearch());
     SessionSearch->bIsLanQuery = false;
@@ -116,4 +121,19 @@ void UTopDownGameInstance::JoinServer()
     SessionSearch->QuerySettings.Set(SEARCH_PRESENCE, true, EOnlineComparisonOp::Equals);
 
     SessionInterface->FindSessions(0, SessionSearch.ToSharedRef());
+
+    SearchingForServer.Broadcast(true);
+}
+
+void UTopDownGameInstance::JoinServer(int32 ArrayIndex)
+{
+    FOnlineSessionSearchResult Result = SessionSearch->SearchResults[ArrayIndex];
+    if(Result.IsValid())
+    {
+        SessionInterface->JoinSession(0, MySessionName, Result);
+    }
+    else
+    {
+        UE_LOG(LogTemp, Warning, TEXT("Failed to join server at index %d"), ArrayIndex);
+    }
 }
