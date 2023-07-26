@@ -1,0 +1,12 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UnrealEditor-MultiplayerSessions.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"C:\Users\chha0024\Downloads\Turn_Based_Movement\TopDownMovement\Intermediate\Build\Win64\TopDownMovementEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h.obj"
+"C:\Users\chha0024\Downloads\Turn_Based_Movement\TopDownMovement\Plugins\MultiplayerSessions\Intermediate\Build\Win64\UnrealEditor\Development\MultiplayerSessions\MultiplayerSessions.cpp.obj"
+"C:\Users\chha0024\Downloads\Turn_Based_Movement\TopDownMovement\Plugins\MultiplayerSessions\Intermediate\Build\Win64\UnrealEditor\Development\MultiplayerSessions\Default.rc2.res"
+/OUT:"C:\Users\chha0024\Downloads\Turn_Based_Movement\TopDownMovement\Plugins\MultiplayerSessions\Intermediate\Build\Win64\UnrealEditor\Development\MultiplayerSessions\UnrealEditor-MultiplayerSessions.lib"

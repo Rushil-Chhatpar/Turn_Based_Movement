@@ -99,9 +99,14 @@ void UTopDownGameInstance::CreateServer(FString ServerName, FString HostName)
 
     UE_LOG(LogTemp, Warning, TEXT("Create server"));
     FOnlineSessionSettings SessionSettings;
+    if (IOnlineSubsystem::Get()->GetSubsystemName() == FName("NULL"))
+        SessionSettings.bIsLANMatch = true;
+    else if(IOnlineSubsystem::Get()->GetSubsystemName() == FName("Steam"))
+        SessionSettings.bIsLANMatch = false;
+
+
     SessionSettings.bAllowJoinInProgress = true;
     SessionSettings.bIsDedicated = false;
-    SessionSettings.bIsLANMatch = false;
     SessionSettings.bShouldAdvertise = true;
     SessionSettings.bUsesPresence = true;
     SessionSettings.NumPublicConnections = 4;
@@ -109,7 +114,7 @@ void UTopDownGameInstance::CreateServer(FString ServerName, FString HostName)
     SessionSettings.Set(FName("SERVER_NAME_KEY"), ServerName, EOnlineDataAdvertisementType::ViaOnlineServiceAndPing);
     SessionSettings.Set(FName("SERVER_HOSTNAME_KEY"), HostName, EOnlineDataAdvertisementType::ViaOnlineServiceAndPing);
 
-
+    
     SessionInterface->CreateSession(0, MySessionName, SessionSettings);
 }
 
