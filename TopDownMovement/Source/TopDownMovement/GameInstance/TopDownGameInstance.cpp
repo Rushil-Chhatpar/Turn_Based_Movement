@@ -27,7 +27,7 @@ void UTopDownGameInstance::Init()
             SessionInterface->OnJoinSessionCompleteDelegates.AddUObject(this, &UTopDownGameInstance::OnJoinSessionComplete);
         }
     }
-
+    
 }
 
 void UTopDownGameInstance::OnCreateSessionComplete(FName SessionName, bool bWasSuccessful)
