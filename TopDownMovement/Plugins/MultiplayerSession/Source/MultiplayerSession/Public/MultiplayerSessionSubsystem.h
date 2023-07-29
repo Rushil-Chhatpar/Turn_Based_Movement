@@ -94,4 +94,10 @@ private:
 
 	////////////////////
 
+
+private:
+	bool bCreateSessionOnDestroy = false;
+	int32 LastNumPublicConnections = 0;
+	
+
 };

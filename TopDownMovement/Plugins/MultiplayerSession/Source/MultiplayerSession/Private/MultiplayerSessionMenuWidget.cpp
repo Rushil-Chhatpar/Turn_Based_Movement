@@ -6,6 +6,7 @@
 #include "MultiplayerSessionSubsystem.h"
 #include "OnlineSessionSettings.h"
 #include "OnlineSubsystem.h"
+#include "GameFramework/GameModeBase.h"
 
 
 void UMultiplayerSessionMenuWidget::MenuSetup()
@@ -102,7 +103,7 @@ void UMultiplayerSessionMenuWidget::OnJoinSession(EOnJoinSessionCompleteResult::
             // Get the session address
             FString Address;
             SessionInterface->GetResolvedConnectString(NAME_GameSession, Address);
-
+            
             // Client travel
             APlayerController* PlayerController = GetGameInstance()->GetFirstLocalPlayerController(GetWorld());
             PlayerController->ClientTravel(Address, TRAVEL_Absolute);
@@ -112,6 +113,25 @@ void UMultiplayerSessionMenuWidget::OnJoinSession(EOnJoinSessionCompleteResult::
 
 void UMultiplayerSessionMenuWidget::OnDestroySession(bool bWasSuccessful)
 {
+    UWorld* World = GetWorld();
+    if(World)
+    {
+        AGameModeBase* GameMode = World->GetAuthGameMode();
+        // if on server
+        if(GameMode)
+        {
+            GameMode->ReturnToMainMenuHost();
+        }
+        // if on client
+        else
+        {
+            APlayerController* PlayerController = World->GetFirstPlayerController();
+            if(PlayerController)
+            {
+                PlayerController->ClientReturnToMainMenuWithTextReason(FText());
+            }
+        }
+    }
 }
 
 void UMultiplayerSessionMenuWidget::OnStartSession(bool bWasSuccessful)

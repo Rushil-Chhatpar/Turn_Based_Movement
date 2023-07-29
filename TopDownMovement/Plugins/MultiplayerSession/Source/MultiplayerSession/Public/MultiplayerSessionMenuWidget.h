@@ -35,9 +35,13 @@ protected:
 		void OnDestroySession(bool bWasSuccessful);
 	UFUNCTION()
 		void OnStartSession(bool bWasSuccessful);
+
+	///////////////////
 private:
 	// Subsystem for handling online multiplayer sessions
 	class UMultiplayerSessionSubsystem* MultiplayerSessionSubsystem;
+
+	FString PathToLobby{ TEXT("") };
 
 	//
 	//Buttons
