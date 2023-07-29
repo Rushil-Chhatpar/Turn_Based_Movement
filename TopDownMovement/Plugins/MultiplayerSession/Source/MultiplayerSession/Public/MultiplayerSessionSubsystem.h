@@ -8,6 +8,16 @@
 
 #include "MultiplayerSessionSubsystem.generated.h"
 
+
+//
+// Custom delegates for any other class to bind callbacks to
+//
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMultiplayerOnCreateSessionComplete, bool, bWasSuccessful);
+DECLARE_MULTICAST_DELEGATE_TwoParams(FMultiplayerOnFindSessionComplete, const TArray<FOnlineSessionSearchResult>& SearchResults, bool bWasSuccessful);
+DECLARE_MULTICAST_DELEGATE_OneParam(FMultiplayerOnJoinSessionComplete, EOnJoinSessionCompleteResult::Type Result);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMultiplayerOnDestroySessionComplete, bool, bWasSuccessful);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMultiplayerOnStartSessionComplete, bool, bWasSuccessful);
+
 /**
  * 
  */
@@ -31,6 +41,16 @@ public:
 	void StartSession();
 
 	////////////////////
+
+	//
+    // Custom delegates for any other class to bind callbacks to
+    //
+	FMultiplayerOnCreateSessionComplete MultiplayerOnCreateSessionComplete;
+	FMultiplayerOnFindSessionComplete MultiplayerOnFindSessionComplete;
+	FMultiplayerOnJoinSessionComplete MultiplayerOnJoinSessionComplete;
+	FMultiplayerOnDestroySessionComplete MultiplayerOnDestroySessionComplete;
+	FMultiplayerOnStartSessionComplete MultiplayerOnStartSessionComplete;
+	
 protected:
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 
@@ -46,6 +66,9 @@ protected:
 	
 private:
 	IOnlineSessionPtr SessionInterface;
+
+	// Last Sessions Searched
+	TSharedPtr<FOnlineSessionSearch> LastSessionSearch;
 
 	// Last created session settings
 	TSharedPtr<FOnlineSessionSettings> LastSessionSettings;
