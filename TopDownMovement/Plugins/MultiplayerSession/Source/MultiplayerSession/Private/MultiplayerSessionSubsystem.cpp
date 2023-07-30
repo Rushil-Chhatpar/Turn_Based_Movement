@@ -20,7 +20,7 @@ UMultiplayerSessionSubsystem::UMultiplayerSessionSubsystem()
     }
 }
 
-void UMultiplayerSessionSubsystem::CreateSession(int32 NumPublicConnections)
+void UMultiplayerSessionSubsystem::CreateSession(int32 NumPublicConnections, FString ServerName)
 {
     if (!SessionInterface.IsValid())
         return;
@@ -53,6 +53,8 @@ void UMultiplayerSessionSubsystem::CreateSession(int32 NumPublicConnections)
     LastSessionSettings->bUsesPresence = true;
     LastSessionSettings->bUseLobbiesIfAvailable = true;
     LastSessionSettings->BuildUniqueId = 1;
+    // Setting server name
+    LastSessionSettings->Set(FName("SERVER_NAME_KEY"), ServerName, EOnlineDataAdvertisementType::ViaOnlineServiceAndPing);
     //
     // This is for when you want to pass in a value to be accessed by session settings anywhere using the Get() function in session settings
     // LastSessionSettings->Set(FName("KeyName"), EOnlineDataAdvertisementType::ViaOnlineServiceAndPing, someValue);
@@ -221,7 +223,7 @@ void UMultiplayerSessionSubsystem::OnDestroySessionComplete(FName SessionName, b
     if(bWasSuccessful && bCreateSessionOnDestroy)
     {
         bCreateSessionOnDestroy = false;
-        CreateSession(LastNumPublicConnections);
+        //CreateSession(LastNumPublicConnections);
     }
 
     // Broadcasting custom delegate

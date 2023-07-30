@@ -37,6 +37,12 @@ protected:
 		void OnStartSession(bool bWasSuccessful);
 
 	///////////////////
+
+public:
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Server Slot Widget")
+		TSubclassOf<class UMultiplayerSessionSlotWidget> ServerSlotClass;
+
 private:
 	// Subsystem for handling online multiplayer sessions
 	class UMultiplayerSessionSubsystem* MultiplayerSessionSubsystem;
@@ -44,14 +50,28 @@ private:
 	FString PathToLobby{ TEXT("") };
 
 	//
-	//Buttons
+	// UI elements
 	//
 
 	UPROPERTY(meta = (BindWidget))
 		class UButton* HostButton;
-
 	UPROPERTY(meta = (BindWidget))
 		class UButton* JoinButton;
+	UPROPERTY(meta = (BindWidget))
+		class UButton* ServerBackButton;
+	UPROPERTY(meta = (BindWidget))
+		class UButton* JoinBackButton;
+	UPROPERTY(meta = (BindWidget))
+		class UButton* CreateServerButton;
+
+	UPROPERTY(meta = (BindWidget))
+		class UWidgetSwitcher* WidgetSwitcher;
+
+	UPROPERTY(meta = (BindWidget))
+		class UEditableText* ServerNameEditableText;
+
+	UPROPERTY(meta = (BindWidget))
+		class UScrollBox* ServerlListBox;
 
 private:
 
@@ -63,7 +83,12 @@ private:
 
 	UFUNCTION()
 		void HostButtonClicked();
-
 	UFUNCTION()
 		void JoinButtonClicked();
+	UFUNCTION()
+		void ServerBackButtonClicked();
+	UFUNCTION()
+		void JoinBackButtonClicked();
+	UFUNCTION()
+		void CreateServerButtonClicked();
 };

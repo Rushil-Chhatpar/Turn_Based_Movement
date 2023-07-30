@@ -34,7 +34,7 @@ public:
 
 	/// <summary>Function to create a session </summary>
 	/// <param name="NumPublicConnections">Max number of players in the session</param>
-	void CreateSession(int32 NumPublicConnections);
+	void CreateSession(int32 NumPublicConnections, FString ServerName);
 	void FindSession(int32 MaxSearchResults);
 	void JoinSession(FOnlineSessionSearchResult& SessionResult);
 	void DestroySession();
