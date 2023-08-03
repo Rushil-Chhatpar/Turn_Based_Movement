@@ -12,6 +12,25 @@ void UMultiplayerSessionSlotWidget::MenuSetup(FOnlineSessionSearchResult Result,
     SearchResult = Result;
     TB_ServerName->SetText(FText::FromString(ServerName));
 
+    UWorld* World = GetWorld();
+
+    if (World)
+    {
+        APlayerController* PlayerController = World->GetFirstPlayerController();
+        if (PlayerController)
+        {
+            // Create and set input mode data for the menu widget
+            FInputModeGameAndUI InputModeData;
+            InputModeData.SetWidgetToFocus(TakeWidget());
+            InputModeData.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+
+            // Set input mode data for the player controller
+            PlayerController->SetInputMode(InputModeData);
+
+            PlayerController->SetShowMouseCursor(true);
+        }
+    }
+
     UGameInstance* GameInstance = GetGameInstance();
     if (GameInstance)
     {

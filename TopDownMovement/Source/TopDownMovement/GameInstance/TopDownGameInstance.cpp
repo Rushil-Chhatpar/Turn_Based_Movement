@@ -22,9 +22,9 @@ void UTopDownGameInstance::Init()
         if(SessionInterface.IsValid())
         {
             //Bind delegates
-            SessionInterface->OnCreateSessionCompleteDelegates.AddUObject(this, &UTopDownGameInstance::OnCreateSessionComplete);
-            SessionInterface->OnFindSessionsCompleteDelegates.AddUObject(this, &UTopDownGameInstance::OnFindSessionComplete);
-            SessionInterface->OnJoinSessionCompleteDelegates.AddUObject(this, &UTopDownGameInstance::OnJoinSessionComplete);
+            //SessionInterface->OnCreateSessionCompleteDelegates.AddUObject(this, &UTopDownGameInstance::OnCreateSessionComplete);
+            //SessionInterface->OnFindSessionsCompleteDelegates.AddUObject(this, &UTopDownGameInstance::OnFindSessionComplete);
+            //SessionInterface->OnJoinSessionCompleteDelegates.AddUObject(this, &UTopDownGameInstance::OnJoinSessionComplete);
         }
     }
     

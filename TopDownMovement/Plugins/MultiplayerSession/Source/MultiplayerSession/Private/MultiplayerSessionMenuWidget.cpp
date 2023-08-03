@@ -29,11 +29,14 @@ void UMultiplayerSessionMenuWidget::MenuSetup()
         {
             // Create and set input mode data for the menu widget
             FInputModeUIOnly InputModeData;
+            FInputModeGameAndUI InputMode;
+            InputMode.SetWidgetToFocus(TakeWidget());
+            InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
             InputModeData.SetWidgetToFocus(TakeWidget());
             InputModeData.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
 
             // Set input mode data for the player controller
-            PlayerController->SetInputMode(InputModeData);
+            PlayerController->SetInputMode(InputMode);
 
             PlayerController->SetShowMouseCursor(true);
         }
@@ -177,10 +180,10 @@ void UMultiplayerSessionMenuWidget::HostButtonClicked()
 void UMultiplayerSessionMenuWidget::JoinButtonClicked()
 {
     WidgetSwitcher->SetActiveWidgetIndex(2);
-    //if(MultiplayerSessionSubsystem)
-    //{
-    //    MultiplayerSessionSubsystem->FindSession(10000);
-    //}
+    if(MultiplayerSessionSubsystem)
+    {
+        MultiplayerSessionSubsystem->FindSession(10000);
+    }
 }
 
 void UMultiplayerSessionMenuWidget::ServerBackButtonClicked()
